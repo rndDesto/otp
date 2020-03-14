@@ -12,7 +12,7 @@
         v-model="otpNum[item-1]"
       />
     </div>
-    <p @click="onSubmitOtp">sumbit</p>
+    <p @click="onSubmitOtp">sumbits</p>
   </div>
 </template>
 
