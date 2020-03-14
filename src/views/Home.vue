@@ -1,18 +1,100 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="otp" :class="{error: isError}">
+      <input
+        v-for="item in 4"
+        :key="item"
+        :data-otp="item"
+        @keyup="onKeyDown"
+        @focus="onBlockText"
+        type="text"
+        :maxlength="max"
+        v-model="otpNum[item-1]"
+      />
+    </div>
+    <p @click="onSubmitOtp">sumbit</p>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
+  data () {
+    return {
+      max: 1,
+      otpNum: [],
+      otpCode: '1234',
+      isError: false
+    }
+  },
+  methods: {
+    onNextForm (e) {
+      const element = e.target
+      const next = element.nextElementSibling
+      if (next) {
+        next.focus()
+      }
+      // e = (e) ? e : window.event;
+      // var charCode = (e.which) ? e.which : e.keyCode;
+      // console.log("keyup = ",charCode)
+    },
+    onPrevForm (e) {
+      const element = e.target
+      const prev = element.previousSibling
+      if (prev) {
+        prev.focus()
+      }
+
+      console.log('prev = ', prev)
+      // e = (e ) ? e : window.event;
+      // var charCode = (e.which) ? e.which : e.keyCode;
+      // console.log("keyup = ",charCode)
+    },
+    onBlockText (e) {
+      e.target.select()
+
+      // console.log("aaa = ", this.select())
+    },
+    onKeyDown (e) {
+      e = e || window.event
+      var charCode = e.which ? e.which : e.keyCode
+      console.log('keydown = ', charCode)
+      this.onNextForm(e)
+      if (charCode === 39) {
+        // console.log("prev = ", e.target)
+        this.onNextForm(e)
+      } else if (charCode === 37) {
+        this.onPrevForm(e)
+      }
+      // if ((charCode > 31 && (charCode < 48 || charCode > 57)) && charCode !== 46) {
+      //   evt.preventDefault();;
+      // } else {
+      //   return true;
+      // }
+    },
+    onSubmitOtp () {
+      const otp = this.otpNum.join('').toString()
+      console.log('otp = ', otp)
+      if (this.otpCode === otp) {
+        console.log('sukses')
+        this.isError = false
+      } else {
+        console.log('galgal')
+        this.isError = true
+      }
+    }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.otp{
+  &.error{
+    input{
+      border-color: red
+      }
+  }
+}
+</style>
