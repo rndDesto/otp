@@ -48,14 +48,9 @@ export default {
       }
 
       console.log('prev = ', prev)
-      // e = (e ) ? e : window.event;
-      // var charCode = (e.which) ? e.which : e.keyCode;
-      // console.log("keyup = ",charCode)
     },
     onBlockText (e) {
       e.target.select()
-
-      // console.log("aaa = ", this.select())
     },
     onKeyDown (e) {
       e = e || window.event
@@ -63,7 +58,6 @@ export default {
       console.log('keydown = ', charCode)
       this.onNextForm(e)
       if (charCode === 39) {
-        // console.log("prev = ", e.target)
         this.onNextForm(e)
       } else if (charCode === 37) {
         this.onPrevForm(e)
@@ -76,7 +70,6 @@ export default {
     },
     onSubmitOtp () {
       const otp = this.otpNum.join('').toString()
-      console.log('otp = ', otp)
       if (this.otpCode === otp) {
         console.log('sukses')
         this.isError = false
